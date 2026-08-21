@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Markdown 101 — วิธีเขียนโพสต์ด้วยใน Jekyll"
+title: "Markdown 101 — วิธีเขียนโพสต์ใน Jekyll"
 date: 2026-08-21 20:00:00 +0700
 categories: guide jekyll markdown
 ---
