@@ -1,0 +1,187 @@
+/* =========================
+   C2Z Dark Blog Theme
+   ========================= */
+
+html {
+    background: #111;
+}
+
+body {
+    background: #111;
+    color: #e5e5e5;
+}
+
+/* Main wrapper */
+.wrapper {
+    max-width: 800px;
+}
+
+/* Links */
+a {
+    color: #58a6ff;
+}
+
+a:visited {
+    color: #58a6ff;
+}
+
+a:hover {
+    color: #79b8ff;
+    text-decoration: underline;
+}
+
+/* Header */
+.site-header {
+    background: #111;
+    border-top: 0;
+    border-bottom: 1px solid #333;
+}
+
+.site-title,
+.site-title:visited {
+    color: #fff;
+}
+
+.site-nav .page-link {
+    color: #e5e5e5;
+}
+
+.site-nav .page-link:hover {
+    color: #fff;
+}
+
+/* Mobile navigation */
+@media screen and (max-width: 600px) {
+
+    .site-nav {
+        background: #181818;
+        border: 1px solid #333;
+    }
+
+    .site-nav .page-link {
+        color: #e5e5e5;
+    }
+
+}
+
+/* Page */
+.page-content {
+    background: #111;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #fff;
+}
+
+/* Post */
+.post-title {
+    color: #fff;
+}
+
+.post-meta {
+    color: #888;
+}
+
+.post-link {
+    color: #fff;
+}
+
+/* Blockquote */
+blockquote {
+    color: #aaa;
+    border-left-color: #444;
+}
+
+/* Code */
+pre,
+code {
+    background: #181818;
+    border-color: #333;
+    color: #e5e5e5;
+}
+
+.highlighter-rouge .highlight,
+.highlight {
+    background: #181818;
+}
+
+/* Tables */
+table {
+    color: #ddd;
+    border-color: #333;
+}
+
+table tr:nth-child(even) {
+    background: #181818;
+}
+
+table th {
+    background: #222;
+    border-color: #333;
+}
+
+table td {
+    border-color: #333;
+}
+
+/* Footer */
+.site-footer {
+    border-top-color: #333;
+}
+
+.footer-col-wrapper {
+    color: #888;
+}
+
+.post-item {
+    margin-bottom: 30px;
+}
+
+.post-item h2 {
+    margin-bottom: 5px;
+}
+
+.post-item h2 a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+.post-item h2 a:hover {
+    color: #79b8ff;
+    text-decoration: underline;
+}
+
+.post-item time {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.post-list-item {
+    padding: 0 0 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #333;
+}
+
+.post-list-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.post-list-item h2 {
+    margin: 0 0 8px;
+}
+
+.post-list-item h2 a {
+    text-decoration: none;
+}
+
+.post-list-item time {
+    font-size: 0.85rem;
+    color: #888;
+}

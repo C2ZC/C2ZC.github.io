@@ -1,0 +1,25 @@
+<footer class="site-footer h-card">
+  <div class="wrapper">
+    <p class="footer-copy">
+      สร้างโดย
+      <a href="{{ page.url | absolute_url }}" target="_top" rel="noopener">{{ site.title | escape }}</a>
+      และ
+      <a href="https://littlelink.io/" target="_blank" rel="noopener">LittleLink</a>
+    </p>
+  </div>
+</footer>
+
+<!-- JS -->
+<script>
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
+
+  document.addEventListener('selectstart', function (e) {
+    e.preventDefault();
+  });
+
+  document.addEventListener('dragstart', function (e) {
+    e.preventDefault();
+  });
+</script>
