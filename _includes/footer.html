@@ -23,3 +23,110 @@
     e.preventDefault();
   });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.querySelectorAll(".highlight").forEach((highlight) => {
+
+    if (highlight.closest(".code-window")) return;
+
+    const code = highlight.querySelector("code");
+
+    if (!code) return;
+
+    let language = code.dataset.lang || "";
+
+    if (!language) {
+      code.classList.forEach((cls) => {
+        if (cls.startsWith("language-")) {
+          language = cls.replace("language-", "");
+        }
+      });
+    }
+
+    if (!language) {
+      const parent = highlight.closest("[class*='language-']");
+
+      if (parent) {
+        const match = parent.className.match(
+          /language-([a-zA-Z0-9_-]+)/
+        );
+
+        if (match) {
+          language = match[1];
+        }
+      }
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "code-window";
+
+    const header = document.createElement("div");
+    header.className = "code-header";
+
+    header.innerHTML = `
+      <div class="code-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="code-language">
+        &lt;/&gt; ${language || "Code"}
+      </div>
+
+      <button class="code-copy" title="Copy code">
+        ⧉
+      </button>
+    `;
+
+    highlight.parentNode.insertBefore(wrapper, highlight);
+
+    const content = document.createElement("div");
+    content.className = "code-content";
+
+    const lineNumbers = document.createElement("div");
+    lineNumbers.className = "code-line-numbers";
+
+    /* ลบ newline ที่ติดมาท้ายสุดจาก Markdown/Rouge */
+    const codeText = code.innerText.replace(/\r?\n$/, "");
+
+    /* นับจำนวนบรรทัด */
+    const lineCount = codeText.split(/\r?\n/).length;
+
+    for (let i = 1; i <= lineCount; i++) {
+      const line = document.createElement("div");
+      line.textContent = i;
+      lineNumbers.appendChild(line);
+    }
+
+    wrapper.appendChild(header);
+    wrapper.appendChild(content);
+
+    content.appendChild(lineNumbers);
+    content.appendChild(highlight);
+
+    const copyButton = header.querySelector(".code-copy");
+
+    copyButton.addEventListener("click", async () => {
+
+      try {
+        await navigator.clipboard.writeText(code.innerText);
+
+        copyButton.textContent = "✓";
+
+        setTimeout(() => {
+          copyButton.textContent = "⧉";
+        }, 1500);
+
+      } catch (error) {
+        console.error("ไม่สามารถคัดลอกโค้ดได้:", error);
+      }
+
+    });
+
+  });
+
+});
+</script>

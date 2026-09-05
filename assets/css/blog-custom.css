@@ -185,3 +185,153 @@ table td {
     font-size: 0.85rem;
     color: #888;
 }
+
+/* ===== Code Block ===== */
+
+.code-window {
+  margin: 24px 0;
+  background: #151515;
+  border: 1px solid #333;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* แถบด้านบน */
+
+.code-header {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 16px;
+  background: #151515;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* จุด 3 จุด */
+
+.code-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.code-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #444;
+}
+
+/* ชื่อภาษา */
+
+.code-language {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  color: #777;
+  font-size: 13px;
+  font-family: system-ui, sans-serif;
+}
+
+/* ปุ่ม Copy */
+
+.code-copy {
+  margin-left: auto;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: #777;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+
+.code-copy:hover {
+  color: #ccc;
+}
+
+/* ===== พื้นที่ Code ===== */
+
+.code-content {
+  display: flex;
+  width: 100%;
+  background: #151515;
+  overflow-x: auto;
+}
+
+/* เลขบรรทัด */
+
+.code-line-numbers {
+  flex-shrink: 0;
+
+  padding: 18px 12px 18px 20px;
+
+  text-align: right;
+  user-select: none;
+
+  color: #666;
+
+  font-family:
+    "Cascadia Code",
+    "JetBrains Mono",
+    Consolas,
+    monospace;
+
+  font-size: 14px;
+  line-height: 1.65;
+
+  border-right: 1px solid #292929;
+}
+
+/* Rouge Highlight */
+
+.code-content .highlight {
+  flex: 1;
+  min-width: 0;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Code */
+
+.code-content .highlight pre {
+  margin: 0 !important;
+
+  padding: 18px 20px !important;
+
+  background: transparent !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  overflow: visible !important;
+}
+
+/* ตัวอักษร */
+
+.code-content .highlight code {
+  background: transparent !important;
+
+  border: none !important;
+  box-shadow: none !important;
+
+  font-family:
+    "Cascadia Code",
+    "JetBrains Mono",
+    Consolas,
+    monospace;
+
+  font-size: 14px;
+  line-height: 1.65;
+}
