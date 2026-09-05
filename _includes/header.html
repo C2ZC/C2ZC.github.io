@@ -4,20 +4,30 @@
 
         <!-- ฝั่งซ้าย: เมนูนำทาง -->
         <nav class="site-nav">
-            <a class="page-link" href="{{ "/" | relative_url }}">Home</a>
-            <a class="page-link" href="{{ "/blog/" | relative_url }}">Blog</a>
-            <a class="page-link" href="{{ "/tags/" | relative_url }}">Tags</a>
-            <a class="page-link" href="{{ "/about/" | relative_url }}">About</a>
+            <a class="page-link" href="{{ " /" | relative_url }}">Home</a>
+            <a class="page-link" href="{{ " /blog/" | relative_url }}">Blog</a>
+            <a class="page-link" href="{{ " /tags/" | relative_url }}">Tags</a>
+            <a class="page-link" href="{{ " /about/" | relative_url }}">About</a>
         </nav>
 
         <!-- ฝั่งขวา: กล่องค้นหา -->
         <div class="header-search-container">
-            <input 
-                type="text" 
-                id="header-search-input" 
-                placeholder="🔍 ค้นหา..." 
-                autocomplete="off"
-            />
+            <button id="search-toggle-btn" aria-label="Toggle Search">
+                <!-- ไอคอนแว่นขยาย -->
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <!-- ไอคอนปิด (X) -->
+                <svg class="close-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" style="display: none;">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <input type="text" id="header-search-input" placeholder="Search..." autocomplete="off">
             <div id="header-search-results" class="search-results-dropdown"></div>
         </div>
 
@@ -27,58 +37,77 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    // 1. ระบบค้นหา (Search Logic)
     const input = document.getElementById("header-search-input");
     const resultsContainer = document.getElementById("header-search-results");
 
-    if (!input || !resultsContainer) return;
-
-    const posts = [
-        {% for post in site.posts %}
+    if (input && resultsContainer) {
+        const posts = [
+            {% for post in site.posts %}
             {
                 title: {{ post.title | jsonify }},
                 url: {{ post.url | relative_url | jsonify }},
                 tags: {{ post.tags | jsonify }}
             }{% unless forloop.last %},{% endunless %}
-        {% endfor %}
-    ];
+            {% endfor %}
+        ];
 
-    input.addEventListener("input", (e) => {
-        const query = e.target.value.trim().toLowerCase();
-        resultsContainer.innerHTML = "";
+        input.addEventListener("input", (e) => {
+            const query = e.target.value.trim().toLowerCase();
+            resultsContainer.innerHTML = "";
 
-        if (!query) {
-            resultsContainer.style.display = "none";
-            return;
-        }
+            if (!query) {
+                resultsContainer.style.display = "none";
+                return;
+            }
 
-        const matchedPosts = posts.filter(p => {
-            const matchTitle = p.title.toLowerCase().includes(query);
-            const matchTag = p.tags && p.tags.some(tag => tag.toLowerCase().includes(query));
-            return matchTitle || matchTag;
-        });
-
-        if (matchedPosts.length > 0) {
-            matchedPosts.forEach(post => {
-                const link = document.createElement("a");
-                link.href = post.url;
-                
-                const tagsText = post.tags && post.tags.length > 0 
-                    ? `<br><small style="color: #777; font-size: 11px;">🏷️ ${post.tags.join(', ')}</small>` 
-                    : '';
-                
-                link.innerHTML = `${post.title}${tagsText}`;
-                resultsContainer.appendChild(link);
+            const matchedPosts = posts.filter(p => {
+                const matchTitle = p.title ? p.title.toLowerCase().includes(query) : false;
+                const matchTag = Array.isArray(p.tags) && p.tags.some(tag => tag.toLowerCase().includes(query));
+                return matchTitle || matchTag;
             });
-        } else {
-            resultsContainer.innerHTML = `<div class="no-result">ไม่พบบทความหรือแท็กนี้</div>`;
-        }
 
-        resultsContainer.style.display = "block";
-    });
+            if (matchedPosts.length > 0) {
+                matchedPosts.forEach(post => {
+                    const link = document.createElement("a");
+                    link.href = post.url;
 
+                    const tagsText = Array.isArray(post.tags) && post.tags.length > 0
+                        ? `<br><small style="color: #777; font-size: 11px;">🏷️ ${post.tags.join(', ')}</small>`
+                        : '';
+
+                    link.innerHTML = `${post.title}${tagsText}`;
+                    resultsContainer.appendChild(link);
+                });
+            } else {
+                resultsContainer.innerHTML = `<div class="no-result">ไม่พบบทความหรือแท็กนี้</div>`;
+            }
+
+            resultsContainer.style.display = "block";
+        });
+    }
+
+    // 2. ระบบ Toggle ปุ่มค้นหาบนมือถือ (Mobile Toggle Logic)
+    const searchContainer = document.querySelector(".header-search-container");
+    const searchBtn = document.getElementById("search-toggle-btn");
+
+    if (searchBtn && searchContainer) {
+        searchBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            searchContainer.classList.toggle("active");
+            if (searchContainer.classList.contains("active") && input) {
+                input.focus();
+            }
+        });
+    }
+
+    // 3. ปิด Dropdown และซ่อนช่องค้นหาเมื่อคลิกนอกพื้นที่
     document.addEventListener("click", (e) => {
-        if (!input.contains(e.target) && !resultsContainer.contains(e.target)) {
-            resultsContainer.style.display = "none";
+        if (searchContainer && !searchContainer.contains(e.target)) {
+            searchContainer.classList.remove("active");
+            if (resultsContainer) {
+                resultsContainer.style.display = "none";
+            }
         }
     });
 });
