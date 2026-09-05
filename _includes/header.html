@@ -1,17 +1,85 @@
 <header class="site-header" role="banner">
 
-    <div class="wrapper">
+    <div class="wrapper site-header-wrapper">
 
-        <a class="site-title" rel="author" href="{{ "/" | relative_url }}">
-            {{ site.title | escape }}
-        </a>
-
+        <!-- ฝั่งซ้าย: เมนูนำทาง -->
         <nav class="site-nav">
+            <a class="page-link" href="{{ "/" | relative_url }}">Home</a>
             <a class="page-link" href="{{ "/blog/" | relative_url }}">Blog</a>
+            <a class="page-link" href="{{ "/tags/" | relative_url }}">Tags</a>
             <a class="page-link" href="{{ "/about/" | relative_url }}">About</a>
-            <a class="page-link" href="{{ "/privacy/" | relative_url }}">Privacy</a>
         </nav>
+
+        <!-- ฝั่งขวา: กล่องค้นหา -->
+        <div class="header-search-container">
+            <input 
+                type="text" 
+                id="header-search-input" 
+                placeholder="🔍 ค้นหา..." 
+                autocomplete="off"
+            />
+            <div id="header-search-results" class="search-results-dropdown"></div>
+        </div>
 
     </div>
 
 </header>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("header-search-input");
+    const resultsContainer = document.getElementById("header-search-results");
+
+    if (!input || !resultsContainer) return;
+
+    const posts = [
+        {% for post in site.posts %}
+            {
+                title: {{ post.title | jsonify }},
+                url: {{ post.url | relative_url | jsonify }},
+                tags: {{ post.tags | jsonify }}
+            }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    ];
+
+    input.addEventListener("input", (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        resultsContainer.innerHTML = "";
+
+        if (!query) {
+            resultsContainer.style.display = "none";
+            return;
+        }
+
+        const matchedPosts = posts.filter(p => {
+            const matchTitle = p.title.toLowerCase().includes(query);
+            const matchTag = p.tags && p.tags.some(tag => tag.toLowerCase().includes(query));
+            return matchTitle || matchTag;
+        });
+
+        if (matchedPosts.length > 0) {
+            matchedPosts.forEach(post => {
+                const link = document.createElement("a");
+                link.href = post.url;
+                
+                const tagsText = post.tags && post.tags.length > 0 
+                    ? `<br><small style="color: #777; font-size: 11px;">🏷️ ${post.tags.join(', ')}</small>` 
+                    : '';
+                
+                link.innerHTML = `${post.title}${tagsText}`;
+                resultsContainer.appendChild(link);
+            });
+        } else {
+            resultsContainer.innerHTML = `<div class="no-result">ไม่พบบทความหรือแท็กนี้</div>`;
+        }
+
+        resultsContainer.style.display = "block";
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!input.contains(e.target) && !resultsContainer.contains(e.target)) {
+            resultsContainer.style.display = "none";
+        }
+    });
+});
+</script>

@@ -3,6 +3,7 @@ layout: post
 title: "Markdown 101 — เขียนโพสต์ Jekyll ฉบับมือใหม่"
 date: 2026-08-21 20:00:00 +0700
 categories: guide jekyll markdown
+tags: [markdown, jekyll, guide]
 ---
 
 ยินดีต้อนรับเข้าสู่การเขียนบล็อกด้วย **Jekyll** ครับ!

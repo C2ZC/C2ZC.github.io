@@ -1,37 +1,195 @@
 ---
-layout: page
+layout: default
 ---
 
-<article class="post h-entry">
+<div class="post-layout">
 
-    <header class="post-header">
-        <h1 class="post-title p-name">{{ page.title | escape }}</h1>
+    <!-- ===== Main Post ===== -->
 
-        <p class="post-meta">
-            <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}">
-                {{ page.date | date: "%-d" }}
-                {% assign month = page.date | date: "%-m" %}
-                {% case month %}
-                {% when '1' %}มกราคม
-                {% when '2' %}กุมภาพันธ์
-                {% when '3' %}มีนาคม
-                {% when '4' %}เมษายน
-                {% when '5' %}พฤษภาคม
-                {% when '6' %}มิถุนายน
-                {% when '7' %}กรกฎาคม
-                {% when '8' %}สิงหาคม
-                {% when '9' %}กันยายน
-                {% when '10' %}ตุลาคม
-                {% when '11' %}พฤศจิกายน
-                {% when '12' %}ธันวาคม
-                {% endcase %}
-                {{ page.date | date: "%Y" | plus: 543 }}
-            </time>
-        </p>
-    </header>
+    <main class="post-main">
 
-    <div class="post-content e-content">
-        {{ content }}
-    </div>
+        <article class="post h-entry">
 
-</article>
+            <header class="post-header">
+
+                <h1 class="post-title p-name">
+                    {{ page.title | escape }}
+                </h1>
+
+                <p class="post-meta">
+
+                    <time
+                        class="dt-published"
+                        datetime="{{ page.date | date_to_xmlschema }}"
+                    >
+
+                        {{ page.date | date: "%-d" }}
+
+                        {% assign month = page.date | date: "%-m" %}
+
+                        {% case month %}
+                            {% when '1' %}มกราคม
+                            {% when '2' %}กุมภาพันธ์
+                            {% when '3' %}มีนาคม
+                            {% when '4' %}เมษายน
+                            {% when '5' %}พฤษภาคม
+                            {% when '6' %}มิถุนายน
+                            {% when '7' %}กรกฎาคม
+                            {% when '8' %}สิงหาคม
+                            {% when '9' %}กันยายน
+                            {% when '10' %}ตุลาคม
+                            {% when '11' %}พฤศจิกายน
+                            {% when '12' %}ธันวาคม
+                        {% endcase %}
+
+                        {{ page.date | date: "%Y" | plus: 543 }}
+
+                    </time>
+
+                </p>
+
+            </header>
+
+
+            <div class="post-content e-content">
+                {{ content }}
+            </div>
+
+        </article>
+
+    </main>
+
+
+    <!-- ===== Sidebar ===== -->
+
+    <aside class="post-sidebar">
+
+        <!-- Recently Updated (อยู่ปกติ เลื่อนตามหน้าเว็บ) -->
+        <section class="post-sidebar-section">
+
+            <h3>Recently Updated</h3>
+
+            <ul class="recent-posts">
+
+                {% assign recent_posts = site.posts | sort: "date" | reverse %}
+
+                {% for post in recent_posts limit: 5 %}
+
+                    <li>
+                        <a href="{{ post.url | relative_url }}">
+                            {{ post.title }}
+                        </a>
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </section>
+
+
+        <!-- Tags (ดึงเฉพาะ Tags ของโพสต์นี้) -->
+        <section class="post-sidebar-section">
+
+            <h3>Tags</h3>
+
+            <div class="sidebar-tags">
+
+                {% if page.tags and page.tags.size > 0 %}
+                    {% for tag in page.tags %}
+                        <a class="sidebar-tag" href="{{ '/tags/' | relative_url }}?tag={{ tag | url_encode }}">{{ tag }}</a>
+                    {% endfor %}
+                {% else %}
+                    <span style="color: #777; font-size: 13px;">ไม่มีแท็ก</span>
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- Contents (Sticky: ติดอยู่กับที่เมื่อเลื่อนลงมาถึง) -->
+        <div class="post-sidebar-fixed">
+
+            <section class="post-sidebar-section">
+
+                <h3>Contents</h3>
+
+                <nav
+                    id="post-toc"
+                    class="post-toc"
+                    aria-label="Contents"
+                ></nav>
+
+            </section>
+
+        </div>
+
+    </aside>
+
+</div>
+
+<!-- ===== ปุ่ม Back to Top ===== -->
+<button id="back-to-top" aria-label="Back to top">
+    ↑
+</button>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* ==========================================
+       1. ระบบ Table of Contents (TOC)
+       ========================================== */
+    const content = document.querySelector(".post-main .post-content");
+    const toc = document.querySelector("#post-toc");
+
+    if (content && toc) {
+        const headings = content.querySelectorAll("h2");
+
+        if (!headings.length) {
+            toc.innerHTML = "<span style='color:#777;font-size:13px;'>ไม่มีหัวข้อ</span>";
+        } else {
+            headings.forEach((heading, index) => {
+                let id = heading.id;
+
+                if (!id) {
+                    id = `heading-${index + 1}`;
+                    heading.id = id;
+                }
+
+                const link = document.createElement("a");
+                link.href = `#${id}`;
+                link.textContent = heading.textContent.trim();
+
+                toc.appendChild(link);
+            });
+        }
+    }
+
+    /* ==========================================
+       2. ระบบปุ่ม Back to Top
+       ========================================== */
+    const backToTopBtn = document.getElementById("back-to-top");
+
+    if (backToTopBtn) {
+        // ซ่อน/แสดง ปุ่มเมื่อเลื่อนหน้าจอลงมาเกิน 300px
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        });
+
+        // เลื่อนขึ้นบนสุดเมื่อคลิก
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    }
+
+});
+</script>

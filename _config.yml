@@ -31,6 +31,14 @@ url: "https://c2z.top" # the base hostname & protocol for your site, e.g. http:/
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-archives
+
+jekyll-archives:
+  enabled:
+    - tags
+  layout: 'archive'
+  permalinks:
+    tag: '/tags/:name/'
 
 # Exclude from processing.
 # The following items will not be processed, by default.

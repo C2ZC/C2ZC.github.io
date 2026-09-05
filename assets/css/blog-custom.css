@@ -13,7 +13,9 @@ body {
 
 /* Main wrapper */
 .wrapper {
-    max-width: 800px;
+    max-width: 1180px; /* ปรับขนาดครอบเพื่อรองรับ Post Layout 900px + Sidebar 240px + Gap 40px */
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* Links */
@@ -30,24 +32,116 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Header */
+/* ===== Header & Navigation ===== */
+
 .site-header {
     background: #111;
     border-top: 0;
     border-bottom: 1px solid #333;
+    padding: 0; /* ลบ Padding นอกสุดออก */
+    min-height: auto !important; /* ล้างความสูงขั้นต่ำเดิมของ Minima */
 }
 
-.site-title,
-.site-title:visited {
+/* ปรับระยะห่างบน-ล่างให้กระชับสมดุล */
+.site-header .wrapper {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 12px 20px !important; /* ควบคุมระยะห่างบน-ล่างด้วย Padding 12px ตรงนี้ */
+    min-height: auto !important;
+}
+
+/* ล้างค่า float และ line-height เดิมของธีม Minima บนเมนูนำทาง */
+.site-header .site-nav {
+    float: none !important;
+    position: static !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    background: transparent !important;
+    border: none !important;
+    line-height: 1 !important; /* ล้างความสูงบรรทัดเดิมที่ทำให้ลอย */
+}
+
+.site-header .site-nav .page-link {
+    margin-left: 0 !important;
+    padding: 0 !important;
+    color: #e5e5e5 !important;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1 !important;
+}
+
+.site-header .site-nav .page-link:hover {
+    color: #fff !important;
+}
+
+/* Header Search Bar ฝั่งขวา */
+.header-search-container {
+    position: relative;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+#header-search-input {
+    background: #111;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.2s ease;
+    width: 120px;
+    line-height: 1.2;
+}
+
+#header-search-input:focus {
+    width: 180px;
+    border-color: #555;
+    background: #1a1a1a;
+}
+
+.search-results-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 260px;
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 8px;
+    margin-top: 8px;
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.search-results-dropdown a {
+    display: block;
+    padding: 10px 14px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 13px;
+    border-bottom: 1px solid #222;
+    line-height: 1.4;
+}
+
+.search-results-dropdown a:last-child {
+    border-bottom: none;
+}
+
+.search-results-dropdown a:hover {
+    background: #252525;
     color: #fff;
 }
 
-.site-nav .page-link {
-    color: #e5e5e5;
-}
-
-.site-nav .page-link:hover {
-    color: #fff;
+.search-results-dropdown .no-result {
+    padding: 12px 14px;
+    color: #777;
+    font-size: 13px;
 }
 
 /* Mobile navigation */
@@ -130,13 +224,36 @@ table td {
     border-color: #333;
 }
 
-/* Footer */
+/* ===== Footer ===== */
+
 .site-footer {
-    border-top-color: #333;
+    border-top: 1px solid #333;
+    padding: 24px 0; /* ปรับขนาดระยะห่างบน-ล่าง (เพิ่ม/ลด เลข 24px ได้ตามต้องการ) */
+    background: #111;
 }
 
-.footer-col-wrapper {
+/* จัดข้อความให้อยู่กึ่งกลาง และคุมความกว้างให้ตรงกับ Header/Content */
+.site-footer .wrapper {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center; /* ดันข้อความให้อยู่กลางจอ */
+}
+
+.site-footer .footer-col-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #888;
+    font-size: 13px;
+}
+
+/* หาก Footer ใช้ p หรือ span ทั่วไป */
+.site-footer p {
+    margin: 0;
+    text-align: center;
+    color: #888;
+    font-size: 13px;
 }
 
 .post-item {
@@ -189,149 +306,326 @@ table td {
 /* ===== Code Block ===== */
 
 .code-window {
-  margin: 24px 0;
-  background: #151515;
-  border: 1px solid #333;
-  border-radius: 14px;
-  overflow: hidden;
+    margin: 24px 0;
+    background: #151515;
+    border: 1px solid #333;
+    border-radius: 14px;
+    overflow: hidden;
 }
 
 /* แถบด้านบน */
 
 .code-header {
-  height: 46px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 0 16px;
-  background: #151515;
-  border-bottom: 1px solid #2a2a2a;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 16px;
+    background: #151515;
+    border-bottom: 1px solid #2a2a2a;
 }
 
 /* จุด 3 จุด */
 
 .code-dots {
-  display: flex;
-  gap: 8px;
+    display: flex;
+    gap: 8px;
 }
 
 .code-dots span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #444;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #444;
 }
 
 /* ชื่อภาษา */
 
 .code-language {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 
-  color: #777;
-  font-size: 13px;
-  font-family: system-ui, sans-serif;
+    color: #777;
+    font-size: 13px;
+    font-family: system-ui, sans-serif;
 }
 
 /* ปุ่ม Copy */
 
 .code-copy {
-  margin-left: auto;
+    margin-left: auto;
 
-  border: none;
-  outline: none;
-  background: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
 
-  color: #777;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 5px;
+    color: #777;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
 }
 
 .code-copy:hover {
-  color: #ccc;
+    color: #ccc;
 }
 
 /* ===== พื้นที่ Code ===== */
 
 .code-content {
-  display: flex;
-  width: 100%;
-  background: #151515;
-  overflow-x: auto;
+    display: flex;
+    width: 100%;
+    background: #151515;
+    overflow-x: auto;
 }
 
 /* เลขบรรทัด */
 
 .code-line-numbers {
-  flex-shrink: 0;
+    flex-shrink: 0;
 
-  padding: 18px 12px 18px 20px;
+    padding: 18px 12px 18px 20px;
 
-  text-align: right;
-  user-select: none;
+    text-align: right;
+    user-select: none;
 
-  color: #666;
+    color: #666;
 
-  font-family:
-    "Cascadia Code",
-    "JetBrains Mono",
-    Consolas,
-    monospace;
+    font-family:
+        "Cascadia Code",
+        "JetBrains Mono",
+        Consolas,
+        monospace;
 
-  font-size: 14px;
-  line-height: 1.65;
+    font-size: 14px;
+    line-height: 1.65;
 
-  border-right: 1px solid #292929;
+    border-right: 1px solid #292929;
 }
 
 /* Rouge Highlight */
 
 .code-content .highlight {
-  flex: 1;
-  min-width: 0;
+    flex: 1;
+    min-width: 0;
 
-  margin: 0 !important;
-  padding: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 
-  background: transparent !important;
+    background: transparent !important;
 
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
 /* Code */
 
 .code-content .highlight pre {
-  margin: 0 !important;
+    margin: 0 !important;
 
-  padding: 18px 20px !important;
+    padding: 18px 20px !important;
 
-  background: transparent !important;
+    background: transparent !important;
 
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 
-  overflow: visible !important;
+    overflow: visible !important;
 }
 
 /* ตัวอักษร */
 
 .code-content .highlight code {
-  background: transparent !important;
+    background: transparent !important;
 
-  border: none !important;
-  box-shadow: none !important;
+    border: none !important;
+    box-shadow: none !important;
 
-  font-family:
-    "Cascadia Code",
-    "JetBrains Mono",
-    Consolas,
-    monospace;
+    font-family:
+        "Cascadia Code",
+        "JetBrains Mono",
+        Consolas,
+        monospace;
 
-  font-size: 14px;
-  line-height: 1.65;
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+/* ===== Post Layout ===== */
+
+.post-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 900px) 240px; 
+    gap: 40px; 
+    align-items: start;
+}
+
+.post-main {
+    min-width: 0;
+    width: 100%;
+}
+
+/* ===== Sidebar ===== */
+
+.post-sidebar {
+    min-width: 0;
+    height: 100%;
+}
+
+/* ===== Contents : Sticky ===== */
+
+.post-sidebar-fixed {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 30px;
+    z-index: 10;
+}
+
+/* ===== Sidebar Section ===== */
+
+.post-sidebar-section {
+    margin-bottom: 40px;
+    padding-left: 16px;
+    border-left: 1px solid #333;
+}
+
+.post-sidebar-section h3 {
+    margin: 0 0 16px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.post-sidebar-section ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.post-sidebar-section li {
+    margin-bottom: 12px;
+}
+
+.post-sidebar-section a {
+    color: #777;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.post-sidebar-section a:hover {
+    color: #aaa;
+}
+
+/* ===== Recently Updated ===== */
+
+.recent-posts {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.recent-posts li {
+    margin-bottom: 12px;
+}
+
+/* ===== Tags ===== */
+
+.sidebar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.sidebar-tag {
+    display: inline-block;
+    padding: 5px 9px;
+    border: 1px solid #333;
+    border-radius: 999px;
+    color: #777 !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    text-decoration: none;
+}
+
+.sidebar-tag:hover {
+    border-color: #555;
+    color: #aaa !important;
+}
+
+/* ===== Contents ===== */
+
+.post-toc {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.post-toc a {
+    display: block;
+    color: #777;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.post-toc a:hover {
+    color: #aaa;
+}
+
+/* ===== Mobile ===== */
+
+@media (max-width: 900px) {
+
+    .post-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .post-sidebar-fixed {
+        position: static;
+    }
+
+}
+
+/* ===== Back to Top Button ===== */
+
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99;
+    
+    width: 42px;
+    height: 42px;
+    
+    background: #181818;
+    color: #ccc;
+    border: 1px solid #333;
+    border-radius: 50%;
+    
+    font-size: 18px;
+    cursor: pointer;
+    
+    /* การซ่อนและทำแอนิเมชันลอยขึ้นมา */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s ease-in-out;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#back-to-top:hover {
+    background: #222;
+    color: #fff;
+    border-color: #555;
 }

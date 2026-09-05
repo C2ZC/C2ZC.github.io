@@ -1,0 +1,13 @@
+---
+layout: default
+---
+
+<h1>Tag: {{ page.title }}</h1>
+
+<ul>
+  {% for post in page.posts %}
+    <li>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a> - <small>{{ post.date | date: "%d/%m/%Y" }}</small>
+    </li>
+  {% endfor %}
+</ul>
