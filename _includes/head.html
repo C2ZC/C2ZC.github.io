@@ -6,14 +6,14 @@
     {% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}
   </title>
 
-  <meta name="description" content="{{ site.description | strip_html | escape }}">
+  <meta name="description" content="{{ page.description | escape }}">
   <meta name="author" content="{{ site.title | escape }}">
 
   <!-- Canonical -->
   <link rel="canonical" href="{{ page.url | absolute_url }}">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="{{ "/assets/images/avatar.png" | relative_url }}">
+  <link rel="icon" type="image/png" href="{{ page.avatar | absolute_url }}">
 
   <!-- Theme Color -->
   <meta name="theme-color" content="#ffffff">
@@ -21,9 +21,9 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}">
-  <meta property="og:description" content="{{ site.description | strip_html | escape }}">
+  <meta property="og:description" content="{{ page.description | escape }}">
   <meta property="og:url" content="{{ page.url | absolute_url }}">
-  <meta property="og:image" content="{{ "/assets/images/avatar@2x.png" | absolute_url }}">
+  <meta property="og:image" content="{{ page.ogimage | absolute_url }}">
 
   <meta name="twitter:card" content="summary">
 
@@ -32,7 +32,7 @@
   <link rel="preload" href="{{ "/assets/fonts/CMU-Regular.woff2" | relative_url }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ "/assets/fonts/CMU-Bold.woff2" | relative_url }}" as="font" type="font/woff2" crossorigin>
 
-  {% if page.url == "/" %}
+  {% if page.layout == nil %}
 
   <!-- LittleLink -->
   <link rel="stylesheet" href="{{ "/assets/css/reset.css" | relative_url }}">

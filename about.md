@@ -1,5 +1,7 @@
 ---
 layout: page
+ogimage: /assets/images/c2z_ogm.png
+avatar: /assets/images/avatar.png
 title: About
 permalink: /about/
 ---

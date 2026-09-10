@@ -1,5 +1,7 @@
 ---
 layout: page
+ogimage: /assets/images/c2z_ogm.png
+avatar: /assets/images/avatar.png
 title: นโยบายความเป็นส่วนตัว
 description: นโยบายความเป็นส่วนตัวและข้อมูลเกี่ยวกับการเก็บรวบรวมข้อมูลของ C2Z
 permalink: /privacy/

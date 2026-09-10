@@ -1,5 +1,7 @@
 ---
 layout: post
+ogimage: /assets/images/c2z_ogm.png
+avatar: /assets/images/avatar.png
 title: "Markdown 101 — เขียนโพสต์ Jekyll ฉบับมือใหม่"
 date: 2026-08-21 20:00:00 +0700
 categories: guide jekyll markdown
