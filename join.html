@@ -1,0 +1,73 @@
+---
+layout: null
+description: กำลังเปิดเกม Minecraft...
+ogimage: /assets/images/c2z_ogm.png
+avatar: /assets/images/avatar.png
+permalink: /join
+---
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecting to Minecraft Server...</title>
+  
+  <!-- Open Graph / Discord Preview -->
+  <meta property="og:title" content="เข้าเล่นเซิฟเวอร์ Minecraft">
+  <meta property="og:description" content="กดตรงนี้เพื่อเชื่อมต่อเข้าเซิฟเวอร์ server.c2z.top ทันที!">
+  <meta property="og:image" content="{{ site.url }}{{ page.ogimage }}">
+  <meta property="og:type" content="website">
+
+  <!-- Redirect ไปยัง Minecraft Deep Link -->
+  <meta http-equiv="refresh" content="0; url=minecraft://connect?serverUrl=server.c2z.top&port=19132">
+  
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .card {
+      background: #1e1e1e;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      max-width: 400px;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 10px 20px;
+      background-color: #388e3c;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background-color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>กำลังเปิดเกม Minecraft...</h2>
+    <p>หากระบบไม่เปิดเกมให้อัตโนมัติ สามารถกดปุ่มด้านล่างเพื่อเข้าเล่นได้ทันที</p>
+    <a href="minecraft://connect?serverUrl=server.c2z.top&port=19132" class="btn">กดที่นี่เพื่อเข้าเกม</a>
+  </div>
+
+  <script>
+    // สคริปต์ช่วยส่งผู้ใช้เข้าเกมทันทีผ่าน JavaScript
+    window.location.href = "minecraft://connect?serverUrl=server.c2z.top&port=19132";
+  </script>
+</body>
+</html>
